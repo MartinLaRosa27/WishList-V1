@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { useAuth0 } from "@auth0/auth0-react";
+import { Footer } from "./components/Footer.jsx";
+import { Index } from "./components/Index.jsx";
+import { NavBar } from "./components/NavBar.jsx";
 
 function App() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div className="text-center mt-5 mb-5">Loading...</div>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {isAuthenticated ? <NavBar user={user} /> : <Index />}
+      <Footer />
     </div>
   );
 }
